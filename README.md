@@ -1,4 +1,4 @@
-# Eruplan Server
+# Eruplan Web Client
 
 <p align="center"><img src='https://i.postimg.cc/G3YX9jYR/logo-eruplan.png' alt="Eruplan Logo" height="400"></p>
 
