@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport"" content="width=device-width,initial-scale=1" />
+  <title>ERUPLAN - Mappa Professionale (fix cerchi)</title>
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Leaflet Draw -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+  <!-- Stili locali -->
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+
+<div id="layout">
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <h3>ERUPLAN</h3>
+    <div class="menu-item">📍 Dashboard</div>
+    <div class="menu-item">📑 Storico Piani</div>
+
+    <div style="flex:1"></div>
+
+    <!-- Bottone logout aggiunto -->
+    <div id="btn-logout" class="menu-item tool-btn">🔓 Logout</div>
+  </div>
+
+  <!-- Mappa -->
+  <div id="map-container">
+    <div id="map"></div>
+  </div>
+
+  <!-- Tools -->
+  <div id="tools">
+    <div style="font-weight:700">Strumenti Disegno</div>
+
+    <div id="btn-pericolo" class="tool-btn">🔺 Disegna Zona Pericolo</div>
+    <div id="btn-sicura" class="tool-btn">🟢 Disegna Zona Sicura</div>
+    <div id="btn-edit" class="tool-btn">✏️ Modifica / Seleziona</div>
+    <div id="btn-delete" class="tool-btn">🗑 Elimina Zona</div>
+
+    <div style="height:6px"></div>
+
+    <div style="font-weight:700">Coordinate</div>
+    <div id="btn-coords" class="tool-btn">📍 Mostra coordinate cerchi</div>
+    <pre id="output">Premi "Mostra coordinate cerchi"</pre>
+  </div>
+</div>
+
+<script src="../script/dashboard.js"></script>
+</body>
+</html>

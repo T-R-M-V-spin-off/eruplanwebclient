@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Login Operatore - Protezione Civile</title>
+  <link rel="stylesheet" href="../css/login.css"/>
+</head>
+<body>
+  <main class="container">
+    <section class="card" aria-labelledby="h1">
+      <h1 id="h1" align="center">Accesso Operatore</h1>
+      <p class="subtitle" align="center">Accesso riservato al personale autorizzato</p>
+
+      <form id="loginForm" novalidate>
+        <div class="field">
+          <label for="username">Codice Operatore</label>
+          <input id="username" name="username" type="text" autocomplete="username" required maxlength="254"/>
+          <div class="invalid-message" id="usernameError" aria-live="polite"></div>
+        </div>
+
+        <div class="field">
+          <label for="password">Password</label>
+          <div class="password-input fancy" aria-hidden="false">
+            <input id="password" name="password" type="password" autocomplete="current-password" required minlength="8" maxlength="128"/>
+            <button type="button" id="togglePassword" class="eye-btn" aria-label="Mostra password" aria-pressed="false" title="Mostra/Nascondi password">
+              Mostra
+            </button>
+          </div>
+
+          <div class="invalid-message" id="passwordError" aria-live="polite"></div>
+        </div>
+
+        <div class="actions" align="center">
+          <button id="submitBtn" type="submit">Accedi</button>
+        </div>
+
+        <div id="formMessage" role="alert" aria-live="assertive" class="form-message"></div>
+      </form>
+    </section>
+  </main>
+
+  <script src="../script/login.js" defer></script>
+</body>
+</html>
