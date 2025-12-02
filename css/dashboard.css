@@ -1,11 +1,58 @@
 body { margin:0; font-family: Arial, Helvetica, sans-serif; height:100vh; overflow:hidden; }
 #layout { display:flex; height:100vh; }
+
+/* SIDEBAR */
 #sidebar { width:220px; background:#fff; border-right:1px solid #ddd; padding:18px; box-sizing:border-box; display:flex; flex-direction:column; }
+
+/* Logo container: logo sopra, testo sotto */
+.logo-container {
+  display:flex;
+  flex-direction:column; /* logo sopra, testo sotto */
+  align-items:center;
+  gap:6px;
+  margin-bottom:12px;
+}
+
+/* Logo*/
+.logo-img {
+  width:56px;
+  height:56px;
+  background: transparent; 
+  border: none;             
+  border-radius:4px;
+  display:block;
+  object-fit:contain;
+  padding:0;                
+  box-shadow: 0 1px 0 rgba(0,0,0,0.03);
+}
+
+/* Testo ERUPLAN sotto al logo, centrato */
+.brand-text {
+  font-size:12px;
+  color:#6b6b6b;
+  text-transform:uppercase;
+  letter-spacing:1px;
+  font-weight:700;
+  text-align:center;
+  margin:0;
+}
+
+/* Menu items */
+.menu-item { margin:8px 0; cursor:pointer; color:#333; }
+.menu-item.active { color:#1f6feb; font-weight:600; }
+
+/* Small override so logout in sidebar looks like in the original layout */
+.logout-btn { margin-top:6px; }
+
+/* MAP */
 #map-container { flex:1; position:relative; }
 #map { width:100%; height:100%; }
+
+/* TOOLS */
 #tools { width:260px; background:#fff; border-left:1px solid #ddd; padding:16px; box-sizing:border-box; display:flex; flex-direction:column; gap:10px; }
 .tool-btn { padding:10px; border-radius:6px; border:1px solid #bbb; background:#f6f7fb; cursor:pointer; user-select:none; }
 .tool-btn.active { background:#dfeaff; border-color:#4a7aff; font-weight:600; }
+
 #output { height:160px; background:#fafafa; border:1px solid #ccc; padding:8px; overflow:auto; font-family:monospace; font-size:13px; white-space:pre-wrap; }
-h3 { margin:0 0 12px 0; }
-.menu-item { margin:8px 0; cursor:pointer; }
+
+h3 { margin:0 0 12px 0; } /* kept in case used elsewhere */
