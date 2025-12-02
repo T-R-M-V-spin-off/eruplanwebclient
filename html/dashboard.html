@@ -2,8 +2,8 @@
 <html lang="it">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport"" content="width=device-width,initial-scale=1" />
-  <title>ERUPLAN - Mappa Professionale (fix cerchi)</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ERUPLAN - Mappa</title>
 
   <!-- Leaflet -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -21,14 +21,19 @@
 <div id="layout">
   <!-- Sidebar -->
   <div id="sidebar">
-    <h3>ERUPLAN</h3>
-    <div class="menu-item">📍 Dashboard</div>
+    <!-- Logo area -->
+    <div class="logo-container">
+      <img src="../imgs/logo-eruplan.png" alt="Logo Eruplan" class="logo-img" />
+      <div class="brand-text">ERUPLAN</div>
+    </div>
+
+    <div class="menu-item active">📍 Dashboard</div>
     <div class="menu-item">📑 Storico Piani</div>
 
     <div style="flex:1"></div>
 
     <!-- Bottone logout aggiunto -->
-    <div id="btn-logout" class="menu-item tool-btn">🔓 Logout</div>
+    <div id="btn-logout" class="menu-item tool-btn logout-btn">🔓 Logout</div>
   </div>
 
   <!-- Mappa -->
