@@ -17,7 +17,7 @@ body { margin:0; font-family: Arial, Helvetica, sans-serif; height:100vh; overfl
 .logo-img {
   width:56px;
   height:56px;
-  background: transparent; 
+  background: transparent;
   border: none;             
   border-radius:4px;
   display:block;
@@ -41,8 +41,12 @@ body { margin:0; font-family: Arial, Helvetica, sans-serif; height:100vh; overfl
 .menu-item { margin:8px 0; cursor:pointer; color:#333; }
 .menu-item.active { color:#1f6feb; font-weight:600; }
 
-/* Small override so logout in sidebar looks like in the original layout */
-.logout-btn { margin-top:6px; }
+/* Logout button specific styles: mostra icona e label allineate */
+.logout-btn { margin-top:6px; display:inline-flex; align-items:center; gap:8px; padding:6px 8px; border-radius:6px; }
+.logout-btn .logout-icon{ width:20px; height:20px; display:inline-block; object-fit:contain; }
+.logout-btn .logout-label{ font-size:15px; }
+.logout-btn:focus{ outline:2px solid rgba(31,111,235,0.25); outline-offset:2px; }
+.logout-btn:hover{ background:#f4f6fb; }
 
 /* MAP */
 #map-container { flex:1; position:relative; }
