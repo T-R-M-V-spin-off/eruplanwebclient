@@ -7,7 +7,7 @@ map.addLayer(drawnItems);
 
 let circles = [];
 
-/* Modalità */
+/* Modal & mode variables */
 let mode = null;
 let currentDraw = null;
 
@@ -56,6 +56,70 @@ document.getElementById("btn-sicura").onclick = () => setMode("sicura");
 document.getElementById("btn-edit").onclick = () => setMode("edit");
 document.getElementById("btn-delete").onclick = () => setMode("delete");
 
+/* Gestione Genera Piano (apre modal) */
+const btnGenera = document.getElementById("btn-genera");
+const overlay = document.getElementById("overlay-modal");
+const inputNome = document.getElementById("nome-piano");
+const btnCancel = document.getElementById("modal-cancel");
+const btnCreate = document.getElementById("modal-create");
+
+btnGenera.addEventListener('click', openModal);
+btnGenera.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); openModal(); } });
+
+function openModal() {
+  // disable drawing/editing modes so the UI is consistent
+  setMode(null);
+  overlay.classList.remove('overlay-hidden');
+  overlay.setAttribute('aria-hidden', 'false');
+  // small delay then focus input
+  setTimeout(() => inputNome.focus(), 80);
+  // prevent map interactions while modal open
+  map.dragging.disable && map.dragging.disable();
+  map.doubleClickZoom.disable && map.doubleClickZoom.disable();
+  map.scrollWheelZoom.disable && map.scrollWheelZoom.disable();
+}
+
+function closeModal() {
+  overlay.classList.add('overlay-hidden');
+  overlay.setAttribute('aria-hidden', 'true');
+  inputNome.value = '';
+  // re-enable map interactions
+  try { map.dragging.enable(); } catch(e){}
+  try { map.doubleClickZoom.enable(); } catch(e){}
+  try { map.scrollWheelZoom.enable(); } catch(e){}
+}
+
+/* Modal actions */
+btnCancel.addEventListener('click', () => closeModal());
+overlay.addEventListener('click', (ev) => {
+  // close if clicked outside the modal content
+  if (ev.target === overlay) closeModal();
+});
+document.addEventListener('keydown', (ev) => {
+  if (overlay.getAttribute('aria-hidden') === 'false' && ev.key === 'Escape') {
+    closeModal();
+  }
+});
+
+/* Simula la creazione del piano: qui puoi inserire la logica reale (API, salvataggio, ecc.) */
+btnCreate.addEventListener('click', () => {
+  const nome = inputNome.value.trim();
+  if (!nome) {
+    // se vuoi, mostra un messaggio di errore più elaborato; per ora basta mettere focus
+    inputNome.focus();
+    return;
+  }
+
+  // Esempio: log del nome e chiusura della modal.
+  console.log('Creazione nuovo piano:', nome);
+
+  // Qui potresti:
+  // - inviare una richiesta fetch() al server per creare il piano,
+  // - generare file, ecc.
+  // Per ora chiudiamo la modal e resettiamo.
+  closeModal();
+});
+
 /* Creazione poligoni */
 map.on("draw:created", e => drawnItems.addLayer(e.layer));
 
@@ -74,7 +138,7 @@ map.on("click", e => {
   circles.push(c);
 });
 
-/* Rimozione cerchi */
+/* Rimozione cerchi (quando usi la toolbar delete di Leaflet.draw) */
 map.on("draw:deleted", e => {
   e.layers.eachLayer(layer => {
     circles = circles.filter(c => c !== layer);
