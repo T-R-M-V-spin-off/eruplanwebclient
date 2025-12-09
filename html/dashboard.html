@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ERUPLAN - Mappa</title>
+  <title>ERUPLAN - Dashboard</title>
   <link rel="icon" type="image/png" href="../imgs/logo-eruplan.png" sizes="32x32">
 
   <!-- Leaflet -->
@@ -53,11 +53,28 @@
     <div id="btn-edit" class="tool-btn">✏️ Modifica / Seleziona</div>
     <div id="btn-delete" class="tool-btn">🗑 Elimina Zona</div>
 
+    <div id="btn-genera" class="tool-btn btn-genera" role="button" tabindex="0">Genera Piano</div>
+
     <div style="height:6px"></div>
 
     <div style="font-weight:700">Coordinate</div>
     <div id="btn-coords" class="tool-btn">📍 Mostra coordinate cerchi</div>
     <pre id="output">Premi "Mostra coordinate cerchi"</pre>
+  </div>
+</div>
+
+<!-- Modal Genera Piano -->
+<div id="overlay-modal" class="overlay-hidden" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h2 id="modal-title">Genera Nuovo Piano</h2>
+
+    <label class="field-label" for="nome-piano">Nome del Piano</label>
+    <input id="nome-piano" class="field-input" type="text" placeholder="Es. Piano Emergenza Vesuvio V4" />
+
+    <div class="modal-actions">
+      <button id="modal-cancel" class="btn-secondary" type="button">Annulla</button>
+      <button id="modal-create" class="btn-primary" type="button">Crea</button>
+    </div>
   </div>
 </div>
 
