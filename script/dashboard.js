@@ -16,8 +16,27 @@ const deleteToolbar = new L.EditToolbar.Delete(map, { featureGroup: drawnItems }
 
 function setMode(newMode) {
   mode = newMode;
-  document.querySelectorAll('.tool-btn').forEach(b => b.classList.remove('active'));
 
+  // rimuovi classi 'active' e reset aria-pressed su tutti i tool-btn
+  document.querySelectorAll('.tool-btn').forEach(b => {
+    b.classList.remove('active');
+    // aggiorna aria-pressed solo per i bottoni che corrispondono agli strumenti (hanno id specifico)
+    if (['btn-pericolo','btn-sicura','btn-edit','btn-delete'].includes(b.id)) {
+      b.setAttribute('aria-pressed', 'false');
+    }
+  });
+
+  // disabilita eventuale currentDraw (se presente)
+  if (currentDraw) {
+    try { currentDraw.disable(); } catch(e){}
+    currentDraw = null;
+  }
+
+  // disabilita toolbar edit/delete
+  try { editToolbar.disable(); } catch(e){}
+  try { deleteToolbar.disable(); } catch(e){}
+
+  // se abbiamo una nuova modalità, abilita la corrispondente UI e setta aria-pressed
   if (newMode) {
     const id = {
       pericolo: "btn-pericolo",
@@ -25,38 +44,69 @@ function setMode(newMode) {
       edit: "btn-edit",
       delete: "btn-delete"
     }[newMode];
+
     const el = document.getElementById(id);
-    if (el) el.classList.add("active");
+    if (el) {
+      el.classList.add("active");
+      el.setAttribute('aria-pressed', 'true');
+    }
   }
 
-  if (currentDraw) { try { currentDraw.disable(); } catch(e){} }
-  currentDraw = null;
-
-  try { editToolbar.disable(); } catch(e){}
-  try { deleteToolbar.disable(); } catch(e){}
-
+  // abilita strumenti specifici dopo aver aggiornato l'UI
   if (newMode === "edit") editToolbar.enable();
   if (newMode === "delete") deleteToolbar.enable();
 }
 
-/* Pulsanti strumenti */
-document.getElementById("btn-pericolo").onclick = () => {
+/* Utility: toggle mode (se è attiva -> disattiva, altrimenti attiva) */
+function toggleMode(toolName) {
+  if (mode === toolName) {
+    setMode(null);
+  } else {
+    setMode(toolName);
+  }
+}
+
+/* Pulsanti strumenti: ora fanno toggle se premuti di nuovo */
+
+/* Disegna Zona Pericolo (poligoni) */
+const btnPericolo = document.getElementById("btn-pericolo");
+btnPericolo.addEventListener('click', () => {
+  if (mode === "pericolo") { setMode(null); return; }
+
   setMode("pericolo");
 
+  // abilita il drawing polygon
   currentDraw = new L.Draw.Polygon(map, {
     allowIntersection: false,
     showArea: true,
     shapeOptions: { color:"red", fillColor:"red", fillOpacity:0.35 }
   });
   currentDraw.enable();
-};
+});
+btnPericolo.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); btnPericolo.click(); } });
 
-// Modalità cerchi "zona sicura" -> aggiunge cerchi al click sulla mappa
-document.getElementById("btn-sicura").onclick = () => setMode("sicura");
-document.getElementById("btn-edit").onclick = () => setMode("edit");
-document.getElementById("btn-delete").onclick = () => setMode("delete");
+/* Disegna Zona Sicura (cerchi sul click) */
+const btnSicura = document.getElementById("btn-sicura");
+btnSicura.addEventListener('click', () => {
+  toggleMode("sicura");
+});
+btnSicura.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); btnSicura.click(); } });
 
-/* Gestione Genera Piano (apre modal) */
+/* Modifica / Seleziona (Edit toolbar) */
+const btnEdit = document.getElementById("btn-edit");
+btnEdit.addEventListener('click', () => {
+  toggleMode("edit");
+});
+btnEdit.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); btnEdit.click(); } });
+
+/* Elimina Zona (Delete toolbar) */
+const btnDelete = document.getElementById("btn-delete");
+btnDelete.addEventListener('click', () => {
+  toggleMode("delete");
+});
+btnDelete.addEventListener('keydown', (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); btnDelete.click(); } });
+
+/* Gestione Genera Piano (apre modal) - rimane invariata */
 const btnGenera = document.getElementById("btn-genera");
 const overlay = document.getElementById("overlay-modal");
 const inputNome = document.getElementById("nome-piano");
@@ -71,19 +121,16 @@ function openModal() {
   setMode(null);
   overlay.classList.remove('overlay-hidden');
   overlay.setAttribute('aria-hidden', 'false');
-  // small delay then focus input
   setTimeout(() => inputNome.focus(), 80);
-  // prevent map interactions while modal open
-  map.dragging.disable && map.dragging.disable();
-  map.doubleClickZoom.disable && map.doubleClickZoom.disable();
-  map.scrollWheelZoom.disable && map.scrollWheelZoom.disable();
+  try { map.dragging.disable(); } catch(e){}
+  try { map.doubleClickZoom.disable(); } catch(e){}
+  try { map.scrollWheelZoom.disable(); } catch(e){}
 }
 
 function closeModal() {
   overlay.classList.add('overlay-hidden');
   overlay.setAttribute('aria-hidden', 'true');
   inputNome.value = '';
-  // re-enable map interactions
   try { map.dragging.enable(); } catch(e){}
   try { map.doubleClickZoom.enable(); } catch(e){}
   try { map.scrollWheelZoom.enable(); } catch(e){}
@@ -92,7 +139,6 @@ function closeModal() {
 /* Modal actions */
 btnCancel.addEventListener('click', () => closeModal());
 overlay.addEventListener('click', (ev) => {
-  // close if clicked outside the modal content
   if (ev.target === overlay) closeModal();
 });
 document.addEventListener('keydown', (ev) => {
@@ -101,29 +147,19 @@ document.addEventListener('keydown', (ev) => {
   }
 });
 
-/* Simula la creazione del piano: qui puoi inserire la logica reale (API, salvataggio, ecc.) */
+/* Simula la creazione del piano (puoi sostituire con fetch later) */
 btnCreate.addEventListener('click', () => {
   const nome = inputNome.value.trim();
-  if (!nome) {
-    // se vuoi, mostra un messaggio di errore più elaborato; per ora basta mettere focus
-    inputNome.focus();
-    return;
-  }
+  if (!nome) { inputNome.focus(); return; }
 
-  // Esempio: log del nome e chiusura della modal.
   console.log('Creazione nuovo piano:', nome);
-
-  // Qui potresti:
-  // - inviare una richiesta fetch() al server per creare il piano,
-  // - generare file, ecc.
-  // Per ora chiudiamo la modal e resettiamo.
   closeModal();
 });
 
-/* Creazione poligoni */
+/* Creazione poligoni (Leaflet Draw) */
 map.on("draw:created", e => drawnItems.addLayer(e.layer));
 
-/* Creazione cerchi */
+/* Creazione cerchi: solo se siamo in modalità "sicura" */
 map.on("click", e => {
   if (mode !== "sicura") return;
 
@@ -148,42 +184,24 @@ map.on("draw:deleted", e => {
 /* Mostra coordinate SOLO quando premi il pulsante */
 document.getElementById("btn-coords").onclick = () => {
   const out = document.getElementById("output");
-
-  // Rimuove eventuali cerchi che non sono più presenti sulla mappa
   circles = circles.filter(c => map.hasLayer(c));
-
   if (circles.length === 0) {
     out.textContent = "Nessun cerchio.";
     return;
   }
-
   out.textContent = circles
     .map((c,i) => `Cerchio ${i+1}: ${c.getLatLng().lat.toFixed(6)}, ${c.getLatLng().lng.toFixed(6)}`)
     .join("\n");
 };
 
 /* ---------- LOGOUT ---------- */
-// Il bottone di logout è stato aggiunto nella sidebar (id: btn-logout).
-// Comportamento:
-// 1) Cerca di chiamare un endpoint '/logout' (POST) per invalidare la sessione server-side (se presente).
-// 2) Pulisce localStorage / sessionStorage.
-// 3) Reindirizza a 'login.html' (modifica la destinazione se necessario).
-
 document.getElementById('btn-logout').onclick = async () => {
-  // Se hai un endpoint server per il logout, puoi usarlo qui.
   try {
     await fetch('/logout', { method: 'POST', credentials: 'include' });
   } catch (e) {
-    // Ignora errori di rete: il redirect avverrà comunque (utile per sviluppo locale senza backend)
     console.warn('Logout endpoint non raggiungibile o non presente.', e);
   }
-
   try { localStorage.clear(); } catch(e){}
   try { sessionStorage.clear(); } catch(e){}
-
-  // Se vuoi rimuovere cookie lato client, è necessario conoscere il nome del cookie e il dominio.
-  // document.cookie = 'session=; Max-Age=0; path=/;';
-
-  // Redirect alla pagina di login — modifica se il path è diverso (es: /auth/login)
   window.location.href = 'login.html';
 };
