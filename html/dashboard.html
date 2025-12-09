@@ -48,10 +48,11 @@
   <div id="tools">
     <div style="font-weight:700">Strumenti Disegno</div>
 
-    <div id="btn-pericolo" class="tool-btn">🔺 Disegna Zona Pericolo</div>
-    <div id="btn-sicura" class="tool-btn">🟢 Disegna Zona Sicura</div>
-    <div id="btn-edit" class="tool-btn">✏️ Modifica / Seleziona</div>
-    <div id="btn-delete" class="tool-btn">🗑 Elimina Zona</div>
+    <!-- Aggiunti aria-pressed per accessibilità / toggle -->
+    <div id="btn-pericolo" class="tool-btn" role="button" aria-pressed="false" tabindex="0">🔺 Disegna Zona Pericolo</div>
+    <div id="btn-sicura" class="tool-btn" role="button" aria-pressed="false" tabindex="0">🟢 Disegna Zona Sicura</div>
+    <div id="btn-edit" class="tool-btn" role="button" aria-pressed="false" tabindex="0">✏️ Modifica / Seleziona</div>
+    <div id="btn-delete" class="tool-btn" role="button" aria-pressed="false" tabindex="0">🗑 Elimina Zona</div>
 
     <div id="btn-genera" class="tool-btn btn-genera" role="button" tabindex="0">Genera Piano</div>
 
