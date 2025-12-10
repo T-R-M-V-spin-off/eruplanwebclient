@@ -1,4 +1,4 @@
-// script.js
+// login.js
 // Comportamento client per il form di login.
 // NOTE: il server dovrebbe impostare cookie HttpOnly/Secure SameSite per la sessione.
 
@@ -71,7 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     submitBtn.disabled = true;
     submitBtn.textContent = 'Connessione...';
 
-    const endpoint = '/api/auth/login';
+    // ENDPOINT esterno richiesto
+    const endpoint = 'https://eruplanserver.azurewebsites.net/gestoreUtentiWeb/login';
 
     const csrfMeta = document.querySelector('meta[name="csrf-token"]');
     const headers = { 'Content-Type': 'application/json' };
@@ -91,7 +92,7 @@ document.addEventListener('DOMContentLoaded', () => {
         method: 'POST',
         headers,
         body: JSON.stringify(payload),
-        credentials: 'include',
+        credentials: 'include',   // mantiene cookie/sessioni cross-site (richiede CORS lato server configurato)
         signal: controller.signal
       });
 
