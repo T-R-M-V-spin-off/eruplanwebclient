@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ERUPLAN - Dashboard</title>
+  <link rel="icon" type="image/png" href="../imgs/logo-eruplan.png" sizes="32x32">
+
+  <!-- Leaflet -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <!-- Leaflet Draw -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/1.0.4/leaflet.draw.js"></script>
+
+  <!-- Stili locali -->
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+
+<div id="layout">
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <!-- Logo area -->
+    <div class="logo-container">
+      <img src="../imgs/logo-eruplan.png" alt="Logo Eruplan" class="logo-img" />
+      <div class="brand-text">ERUPLAN</div>
+    </div>
+
+    <div class="menu-item active">📍 Dashboard</div>
+    <div class="menu-item">📑 Storico Piani</div>
+
+    <div style="flex:1"></div>
+
+    <div id="btn-logout" class="menu-item tool-btn logout-btn" role="button" aria-label="Logout" tabindex="0">
+      <img src="../imgs/logout-icon.png" alt="" class="logout-icon" />
+      <span class="logout-label">Logout</span>
+    </div>
+  </div>
+
+  <!-- Mappa -->
+  <div id="map-container">
+    <div id="map"></div>
+  </div>
+
+  <!-- Tools -->
+  <div id="tools">
+    <div style="font-weight:700">Strumenti Disegno</div>
+
+    <!-- Aggiunti aria-pressed per accessibilità / toggle -->
+    <div id="btn-pericolo" class="tool-btn" role="button" aria-pressed="false" tabindex="0">🔺 Disegna Zona Pericolo</div>
+    <div id="btn-sicura" class="tool-btn" role="button" aria-pressed="false" tabindex="0">🟢 Disegna Zona Sicura</div>
+    <div id="btn-edit" class="tool-btn" role="button" aria-pressed="false" tabindex="0">✏️ Modifica / Seleziona</div>
+    <div id="btn-delete" class="tool-btn" role="button" aria-pressed="false" tabindex="0">🗑 Elimina Zona</div>
+
+    <div id="btn-genera" class="tool-btn btn-genera" role="button" tabindex="0">Genera Piano</div>
+
+    <div style="height:6px"></div>
+
+    <div style="font-weight:700">Coordinate</div>
+    <div id="btn-coords" class="tool-btn">📍 Mostra coordinate cerchi</div>
+    <pre id="output">Premi "Mostra coordinate cerchi"</pre>
+  </div>
+</div>
+
+<!-- Modal Genera Piano -->
+<div id="overlay-modal" class="overlay-hidden" aria-hidden="true">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <h2 id="modal-title">Genera Nuovo Piano</h2>
+
+    <label class="field-label" for="nome-piano">Nome del Piano</label>
+    <input id="nome-piano" class="field-input" type="text" placeholder="Es. Piano Emergenza Vesuvio V4" />
+
+    <div class="modal-actions">
+      <button id="modal-cancel" class="btn-secondary" type="button">Annulla</button>
+      <button id="modal-create" class="btn-primary" type="button">Crea</button>
+    </div>
+  </div>
+</div>
+
+<script src="../script/dashboard.js"></script>
+</body>
+</html>

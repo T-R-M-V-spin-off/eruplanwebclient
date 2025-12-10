@@ -1,0 +1,217 @@
+:root{
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --accent:#0b6cf2;
+  --muted:#666;
+  --danger:#c84b4b;
+  --radius:12px;
+}
+
+*{
+    box-sizing:border-box
+}
+
+html,body{
+    height:100%
+}
+body{
+  margin:0;
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background:linear-gradient(180deg,var(--bg),#eef3fb);
+  color:#111;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+}
+
+.container{
+    width:100%;
+    max-width:420px
+}
+.card{
+  background:var(--card);
+  border-radius:var(--radius);
+  box-shadow:0 8px 30px rgba(15,30,60,0.08);
+  padding:28px;
+  margin-bottom:16px;
+}
+
+h1{
+    margin:0 0 8px;font-size:1.4rem
+}
+
+.subtitle{
+    margin:0 0 18px;
+    color:var(--muted);
+    font-size:0.95rem
+}
+
+.field{
+    margin-bottom:14px
+}
+
+.field.inline{
+    display:flex;
+    align-items:center;
+    gap:8px
+}
+
+label{
+    display:block;
+    font-size:0.95rem;
+    margin-bottom:6px
+}
+
+input[type="text"], input[type="password"]{
+  width:100%;
+  padding:12px 12px;
+  border-radius:10px;
+  border:1px solid #e1e6f0;
+  outline:none;
+  font-size:1rem;
+  background:#fff;
+}
+input:focus{
+    box-shadow:0 0 0 3px rgba(11,108,242,0.08);
+    border-color:var(--accent)
+}
+
+.help{
+    font-size:0.82rem;
+    color:var(--muted);
+    margin-top:6px
+}
+.invalid-message{
+    color:var(--danger);
+    font-size:0.88rem;
+    height:18px;
+    margin-top:6px
+}
+
+/* legacy */
+.password-wrapper{
+    display:flex;
+    gap:8px;
+    align-items:center
+}
+.icon-btn{
+  border:1px solid #e1e6f0;
+  background:#fff;
+  padding:8px;
+  border-radius:10px;
+  cursor:pointer;
+  height:40px;
+  min-width:44px;
+}
+
+.icon-btn:focus{
+    outline:2px solid rgba(11,108,242,0.18)
+}
+
+.actions{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    margin-top:12px;
+    gap: 12px;
+}
+
+button[type="submit"]{
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:10px 24px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+  font-size: 1rem;
+}
+
+button[disabled]{
+    opacity:0.65;cursor:not-allowed
+}
+
+.form-message{
+    margin-top:12px;
+    font-size:0.95rem;
+    min-height:18px
+}
+
+.form-message.success{
+    color:green
+}
+
+.form-message.error{
+    color:var(--danger)
+}
+
+@media (max-width:420px){
+  .card{padding:18px}
+}
+
+/* ----- Password "fancy" input ----- */
+.password-input.fancy {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: #eef6ff;
+  border-radius: 10px;
+  padding: 6px 8px;
+  border: 1px solid #e1e9fb;
+  gap: 8px;
+}
+
+/* input senza bordo, occupa lo spazio lasciato libero */
+.password-input.fancy input {
+  border: none;
+  background: transparent;
+  outline: none;
+  width: 100%;
+  font-size: 1rem;
+  padding: 10px 10px;
+  /* spazio a destra per non essere coperto dal bottone */
+  padding-right: 86px;
+  color: #111;
+}
+
+/* bottone testuale Mostra/Nascondi a destra */
+.eye-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 8px 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 8px;
+  min-height: 36px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #0b6cf2;
+}
+
+/* focus visibile per accessibilità */
+.eye-btn:focus {
+  outline: 2px solid rgba(11,108,242,0.18);
+  box-shadow: 0 2px 8px rgba(11,108,242,0.06);
+}
+
+/* variante quando la password è mostrata (testo diventa più scuro) */
+.eye-btn.open {
+  color: #073a8a;
+  background: rgba(11,108,242,0.04);
+  border: 1px solid rgba(11,108,242,0.06);
+}
+
+/* piccola animazione "pop" al click */
+.eye-btn.animate {
+  transform: translateY(-50%) scale(0.96);
+  transition: transform 120ms ease;
+}
