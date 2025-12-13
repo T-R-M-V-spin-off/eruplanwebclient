@@ -16,15 +16,15 @@ We are all students at **University of Salerno (UNISA)**. PMs are currently enro
 ## 📌 What is it?
 **Eruplan Web Client** is the official web frontend for the Eruplan system. It provides a browser-based user interface that consumes the Eruplan server API and offers the core client-side features for civil protection operators. This repo contains the static frontend assets (HTML, CSS, JS) and the client-side logic.
 Currently, the client implements (or aims to implement) the following features:
-- User authentication / login pages  
+- User authentication / login pages for civil protection operators  
 - Operator dashboard and status views  
 - REST/HTTP integration with the Eruplan backend (API calls)  
 - Display and management of client-side resources (lists, forms, cards)  
 - Static assets and styling (HTML + CSS) and frontend logic in JavaScript
 
 Main features include:
-- Responsive UI for common operator tasks  
-- API-driven views that show server data and allow user actions  
+- Responsive UI for civil protection operator tasks  
+- API-driven views that show server data and allow operator actions  
 - Modular static structure (separate `html/`, `css/`, `script/` folders)
 
 ## 🚀 How to try it
