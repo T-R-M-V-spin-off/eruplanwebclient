@@ -56,4 +56,4 @@ The web client can be executed in a web browser.
 
 ## 🔗 Related resources
 - [Eruplan Server](https://github.com/T-R-M-V-spin-off/eruplanserver) - The official Java server for interact with the Web client and Mobile client.
-- [Eruplan Mobile Client](https://github.com/T-R-M-V-spin-off/eruplanmobileclient) - The official Java application for interacto with the server. 
+- [Eruplan Mobile Client](https://github.com/T-R-M-V-spin-off/eruplanmobileclient) - The official Java application for interact with the server. 
